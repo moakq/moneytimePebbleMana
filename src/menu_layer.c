@@ -92,15 +92,3 @@ void menu_layer_push() {
   }
   window_stack_push(window, true);
 }
- 
-// void deinit()
-// {
-//     window_destroy(window);
-// }
- 
-// int main(void)
-// {
-//     init();
-//     app_event_loop();
-//     deinit();
-// }
