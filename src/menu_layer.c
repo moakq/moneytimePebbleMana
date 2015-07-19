@@ -2,7 +2,7 @@
 
 #include "menu_layer.h"
 #include "pin_window.h"
-#include "done.h"
+#include "ignored.h"
   
 // global pointer to MenuLayer
 MenuLayer *menu_layer;
@@ -42,7 +42,7 @@ void select_callback(struct MenuLayer *menu_layer, MenuIndex *cell_index, void *
 				}
 			break;
 		case 1:
-			done_push();
+			ignored_push();
 			break;
 		case 2:
 					{
@@ -89,6 +89,7 @@ void window_unload(Window *window)
 void menu_layer_push() {
   if(!window) {
     window = window_create();
+		window_set_background_color(window, GColorJaegerGreen);
     window_set_window_handlers(window, (WindowHandlers) {
         .load = window_load,
         .unload = window_unload,

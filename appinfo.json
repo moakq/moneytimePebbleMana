@@ -3,11 +3,18 @@
     "capabilities": [
         ""
     ],
-    "companyName": "muhammed.ottman@gmail.com",
+    "companyName": "timothyhorng@gmail.com",
     "longName": "moneytimePebble",
     "projectType": "native",
     "resources": {
-        "media": []
+        "media": [
+            {
+                "file": "images/money_time.png",
+                "menuIcon": true,
+                "name": "money_time",
+                "type": "png"
+            }
+        ]
     },
     "sdkVersion": "3",
     "shortName": "moneytimePebble",
