@@ -15,13 +15,13 @@ void draw_row_callback(GContext *ctx, Layer *cell_layer, MenuIndex *cell_index, 
     switch(cell_index->row)
     {
     case 0:
-        menu_cell_basic_draw(ctx, cell_layer, "1. Buy", "Take my money!", NULL);
+        menu_cell_basic_draw(ctx, cell_layer, "1. Buy", "", NULL);
         break;
     case 1:
-        menu_cell_basic_draw(ctx, cell_layer, "2. Ignore", "Dafuck!", NULL);
+        menu_cell_basic_draw(ctx, cell_layer, "2. Ignore", "", NULL);
         break;
     case 2:
-        menu_cell_basic_draw(ctx, cell_layer, "3. Sell", "Bananas!", NULL);
+        menu_cell_basic_draw(ctx, cell_layer, "3. Sell", "", NULL);
         break;
     }
 }
