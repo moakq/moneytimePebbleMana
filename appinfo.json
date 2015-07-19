@@ -12,7 +12,6 @@
     "sdkVersion": "3",
     "shortName": "moneytimePebble",
     "targetPlatforms": [
-        "aplite",
         "basalt"
     ],
     "uuid": "436d73e2-0a6e-46ab-a888-e00ef3e1138a",

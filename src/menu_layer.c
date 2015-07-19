@@ -1,13 +1,13 @@
 #include <pebble.h>
 
 #include "menu_layer.h"
+#include "pin_window.h"
+#include "done.h"
   
 // global pointer to MenuLayer
 MenuLayer *menu_layer;
 
 Window* window;
-
-
 
 void draw_row_callback(GContext *ctx, Layer *cell_layer, MenuIndex *cell_index, void *callback_context)
 {
@@ -15,45 +15,49 @@ void draw_row_callback(GContext *ctx, Layer *cell_layer, MenuIndex *cell_index, 
     switch(cell_index->row)
     {
     case 0:
-        menu_cell_basic_draw(ctx, cell_layer, "1. Buy", "", NULL);
+        menu_cell_basic_draw(ctx, cell_layer, "Buy", "", NULL);
         break;
     case 1:
-        menu_cell_basic_draw(ctx, cell_layer, "2. Ignore", "", NULL);
+        menu_cell_basic_draw(ctx, cell_layer, "Ignore", "", NULL);
         break;
     case 2:
-        menu_cell_basic_draw(ctx, cell_layer, "3. Sell", "", NULL);
+        menu_cell_basic_draw(ctx, cell_layer, "Sell", "", NULL);
         break;
     }
+}
+
+static void pin_complete_callback(PIN pin, void *context) {
+  APP_LOG(APP_LOG_LEVEL_INFO, "Pin was %d %d %d", pin.digits[0], pin.digits[1], pin.digits[2]);
+  pin_window_pop((PinWindow*)context, true);
+}
+
+void select_callback(struct MenuLayer *menu_layer, MenuIndex *cell_index, void *context) {
+  switch(cell_index->row) {
+		case 0:
+				{
+					PinWindow *pin_window = pin_window_create((PinWindowCallbacks) {
+							.pin_complete = pin_complete_callback
+						});
+						pin_window_push(pin_window, true);
+				}
+			break;
+		case 1:
+			done_push();
+			break;
+		case 2:
+					{
+					PinWindow *pin_window = pin_window_create((PinWindowCallbacks) {
+							.pin_complete = pin_complete_callback
+						});
+						pin_window_push(pin_window, true);
+					}
+			break;
+	}
 }
  
 uint16_t num_rows_callback(MenuLayer *menu_layer, uint16_t section_index, void *callback_context)
 {
    return 3;
-}
-
-void select_click_callback(MenuLayer *menu_layer, MenuIndex *cell_index, void *callback_context)
-{
-    // get which row
-    int which = cell_index->row;
- 
-    //The array that will hold the on/off vibration times
-    uint32_t segments[16] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
- 
-    // build the pattern (milliseconds on and off in alternating positions)
-    for(int i = 0; i < which + 1; i++)
-    {
-        segments[2 * i] = 200;
-        segments[(2 * i) + 1] = 100;
-    }
- 
-    // create a VibePattern data structure
-    VibePattern pattern = {
-        .durations = segments,
-        .num_segments = 16
-    };
- 
-    // do the vibration pattern!
-    vibes_enqueue_custom_pattern(pattern);
 }
  
 void window_load(Window *window)
@@ -68,7 +72,7 @@ void window_load(Window *window)
     MenuLayerCallbacks callbacks = {
         .draw_row = (MenuLayerDrawRowCallback) draw_row_callback,
         .get_num_rows = (MenuLayerGetNumberOfRowsInSectionsCallback) num_rows_callback,
-        .select_click = (MenuLayerSelectCallback) select_click_callback
+        .select_click = (MenuLayerSelectCallback) select_callback
     };
     menu_layer_set_callbacks(menu_layer, NULL, callbacks);
  

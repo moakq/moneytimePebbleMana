@@ -1,7 +1,8 @@
 #include <pebble.h>
 #include "pin_window.h"
 #include "selection_layer.h"
-
+#include "done.h"
+	
 static char* selection_handle_get_text(int index, void *context) {
   PinWindow *pin_window = (PinWindow*)context;
   snprintf(
@@ -13,9 +14,18 @@ static char* selection_handle_get_text(int index, void *context) {
 }
 
 static void selection_handle_complete(void *context) {
-  PinWindow *pin_window = (PinWindow*)context;
-  pin_window->callbacks.pin_complete(pin_window->pin, pin_window);
+//   PinWindow *pin_window = (PinWindow*)context;
+//   pin_window->callbacks.pin_complete(pin_window->pin, pin_window);
+	done_push();
 }
+
+// void select_click_handler(ClickRecognizerRef recognizer, void *context) {
+//   done_push();
+// }
+
+// void click_config_provider(void *context) {
+//   window_single_click_subscribe(BUTTON_ID_SELECT, select_click_handler);
+// }
 
 static void selection_handle_inc(int index, uint8_t clicks, void *context) {
   PinWindow *pin_window = (PinWindow*)context;

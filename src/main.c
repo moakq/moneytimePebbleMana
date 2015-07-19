@@ -40,6 +40,8 @@ static void main_window_unload(Window *window){
 static void init() {
     // create main Window element and assign to pointer
     s_main_window = window_create();
+	
+		window_set_background_color(s_main_window, GColorJaegerGreen);
   
     window_set_click_config_provider(s_main_window, click_config_provider);
     
